@@ -1,4 +1,4 @@
-# smart_home
+# control home devices
 
 A new Flutter project.
 
