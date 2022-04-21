@@ -10,8 +10,8 @@
  
 WebSocketsClient webSocket;
  
-const char *ssid     = "Youssef";
-const char *password = "12101997";
+const char *ssid     = "Jo";
+const char *password = "xxxxxxxx";
  
 unsigned long messageInterval = 5000;
 bool connected = false;
@@ -102,8 +102,8 @@ void setup() {
     }
     DEBUG_SERIAL.print("Local IP: "); DEBUG_SERIAL.println(WiFi.localIP());
     // server address, port and URL
-    //webSocket.begin("testwebsocketconection.herokuapp.com",80, "/trigger");
-   webSocket.begin("192.168.43.14",8080, "/connect");
+  //  webSocket.begin("testwebsocketconection.herokuapp.com",80, "/trigger");
+   webSocket.begin("192.168.1.4",8080, "/connect");
  
     // event handler
     webSocket.onEvent(webSocketEvent);
