@@ -182,30 +182,28 @@ Widget roomBuildItem (
                  height: size!.width * 0.27,
                  width: size.width * 0.30,
                child: Center(
-                 child: Expanded(
-                   child: Column(
-                       children: [
-                         ListTile(
-                           leading : icon ,
-                           title:  Text(
-                             subtitle ,
-                             style: TextStyle(
-                                 color: Colors.grey,
-                                 fontWeight: FontWeight.bold,
-                                 fontSize: size.width*0.03
-                             ),
+                 child: Column(
+                     children: [
+                       ListTile(
+                         leading : icon ,
+                         title:  Text(
+                           subtitle ,
+                           style: TextStyle(
+                               color: Colors.grey,
+                               fontWeight: FontWeight.bold,
+                               fontSize: size.width*0.03
                            ),
                          ),
-                         const SizedBox(height: 10,),
-                          Text(
-                           title,
-                           style:  TextStyle(
-                               color: Colors.black,
-                               fontWeight: FontWeight.bold,
-                               fontSize: size.width*0.03),
-                         ),
-                       ]),
-                 ),
+                       ),
+                       const SizedBox(height: 10,),
+                        Text(
+                         title,
+                         style:  TextStyle(
+                             color: Colors.black,
+                             fontWeight: FontWeight.bold,
+                             fontSize: size.width*0.03),
+                       ),
+                     ]),
                ),
              ),
            ),

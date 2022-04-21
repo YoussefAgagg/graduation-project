@@ -125,7 +125,6 @@ class _LivingRoomState extends State<LivingRoom> {
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-
                   children: [
                     const SizedBox(height: 50,),
                  const Text('Living Room',
