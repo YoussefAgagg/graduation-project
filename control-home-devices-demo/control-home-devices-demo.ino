@@ -103,8 +103,8 @@ void setup() {
     DEBUG_SERIAL.print("Local IP: "); DEBUG_SERIAL.println(WiFi.localIP());
     // server address, port and URL
   //  webSocket.begin("testwebsocketconection.herokuapp.com",80, "/trigger");
-   webSocket.begin("192.168.1.4",8080, "/connect");
- 
+   webSocket.begin("192.168.1.6",8080, "/connect");
+   webSocket.setAuthorization("esp","password"); 
     // event handler
     webSocket.onEvent(webSocketEvent);
 }
