@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
@@ -23,11 +22,11 @@ public class LoginService {
     private final LoginRepository loginRepository;
     @Loggable
     public void addNewUserWebSocketSession(WebSocketSession session){
-        loginRepository.addNewUserWebSocketSession(getUsernameFromHeader(session), session);
+        loginRepository.addNewUserWebSocketSession(getUsernameFromSessionHeader(session), session);
     }
     @Loggable
     public List<WebSocketSession> getAllWebSocketSessionsExcept(WebSocketSession session){
-       return loginRepository.getAllWebSocketSessionsExceptUsername(getUsernameFromHeader(session));
+       return loginRepository.getAllWebSocketSessionsExceptUsername(getUsernameFromSessionHeader(session));
     }
     @Loggable
     public boolean isUsernameSessionExist(String username){
@@ -36,7 +35,7 @@ public class LoginService {
     @Loggable
     public void removeUserWebSocketSession(WebSocketSession session){
 
-        loginRepository.removeUserWebSocketSession(getUsernameFromHeader(session));
+        loginRepository.removeUserWebSocketSession(getUsernameFromSessionHeader(session));
     }
 
     /**
@@ -45,7 +44,7 @@ public class LoginService {
      * @return the login of the current user.
      */
     @Loggable
-    public  String getUsernameFromHeader(WebSocketSession session) {
+    public  String getUsernameFromSessionHeader(WebSocketSession session) {
         //Fetch Credential from authorization header
         String authorization = session.getHandshakeHeaders().get(HttpHeaders.AUTHORIZATION).toString();
         authorization=authorization.replaceAll("[\\[\\]=]","");
@@ -55,16 +54,5 @@ public class LoginService {
         return credentials.split(":", 2)[0];
     }
 
-    private  String extractPrincipal(Authentication authentication) {
-        if (authentication == null) {
-            return null;
-        } else if (authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-            return springSecurityUser.getUsername();
-        } else if (authentication.getPrincipal() instanceof String) {
-            return (String) authentication.getPrincipal();
-        }
-        return null;
-    }
 
 }

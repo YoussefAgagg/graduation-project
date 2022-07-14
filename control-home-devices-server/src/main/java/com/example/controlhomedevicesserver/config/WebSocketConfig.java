@@ -3,7 +3,6 @@ package com.example.controlhomedevicesserver.config;
 
 import com.example.controlhomedevicesserver.web.websocket.WebSocketHandler;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;

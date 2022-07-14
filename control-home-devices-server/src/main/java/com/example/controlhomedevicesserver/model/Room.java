@@ -1,10 +1,12 @@
 package com.example.controlhomedevicesserver.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.*;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
