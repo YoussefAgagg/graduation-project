@@ -1,0 +1,9 @@
+- add setting to put the url for the server
+-add login page
+
+-check if esp is avalible before send the changes 
+
+data formate:
+
+livingRoom:lamp1:0
+livingRoom:lamp1:1
