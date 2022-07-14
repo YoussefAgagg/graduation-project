@@ -18,16 +18,33 @@ bool connected = false;
 
 
 // GPIO2 input pins 
+//living room
 uint8_t livingRoomLampButton1 = D0;
 uint8_t livingRoomLampButton2 = D1;
 uint8_t livingRoomLampButton3 = D2;
 uint8_t livingRoomLampButton4 = D4;
+// bed room
+//uint8_t bedRoomLampButton1 = D0;
+//uint8_t bedRoomLampButton2 = D1;
+//uint8_t bedRoomLampButton3 = D2;
+// garage
+// uint8_t garageDoorButton = D0;
+
+
 
 // GPIO2 output pins 
+//room leds output
 uint8_t livingRoomLamp1 = D5;
 uint8_t livingRoomLamp2 = D6;
 uint8_t livingRoomLamp3 = D7;
 uint8_t livingRoomLamp4 = D8;
+//bed room leds output
+//uint8_t bedRoomLamp1 = D5;
+//uint8_t bedRoomLamp2 = D6;
+//uint8_t bedRoomLamp3 = D7;
+// garag door
+//uint8_t garageDoorOpen = D5;
+
 
  
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
@@ -43,33 +60,25 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
             String str = (char*)payload;
              Serial.println(str );
             int index=str.indexOf(":");
-            String led=str.substring(0,index);
-            int outputStatus=str.substring(index+1,str.length()).toInt();
+            String room=str.substring(0,index);
+          
             
-                    if( led.equals("livingRoomLamp1")){
-                       if(outputStatus==0)
-                          digitalWrite(livingRoomLamp1, LOW);
-                        else
-                          digitalWrite(livingRoomLamp1, HIGH);
+                if( room.equals("livingRoom")){
+                  String device=str.substring(index+1,str.length());
+                  livingRoom(device);
+                     
                     }
-                    else if(led.equals("livingRoomLamp2")){
-                       if(outputStatus==0)
-                          digitalWrite(livingRoomLamp2, LOW);
-                        else
-                          digitalWrite(livingRoomLamp2, HIGH);
+                else if( room.equals("bedRoom")){
+                  String device=str.substring(index+1,str.length());
+                  bedRoom(device);
+                     
                     }
-                     else if(led.equals("livingRoomLamp3")){
-                       if(outputStatus==0)
-                          digitalWrite(livingRoomLamp3, LOW);
-                        else
-                          digitalWrite(livingRoomLamp3, HIGH);
+                else if( room.equals("garage")){
+                  String device=str.substring(index+1,str.length());
+                  garage(device);
+                     
                     }
-                    else if(led.equals("livingRoomLamp4")){
-                       if(outputStatus==0)
-                          digitalWrite(livingRoomLamp4, LOW);
-                        else
-                          digitalWrite(livingRoomLamp4, HIGH);
-                    }
+              
                  
                     
             DEBUG_SERIAL.printf("[WSc] RESPONSE: %s\n", str);
@@ -78,6 +87,85 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
     }
  
 }
+void livingRoom(String str){
+            int index=str.indexOf(":");
+            String led=str.substring(0,index);
+            int outputStatus=str.substring(index+1,str.length()).toInt();
+            
+                    if( led.equals("lamp1")){
+                      DEBUG_SERIAL.printf("[lamp1] RESPONSE: %s\n", led);
+                       if(outputStatus==0)
+                          digitalWrite(livingRoomLamp1, LOW);
+                        else
+                          digitalWrite(livingRoomLamp1, HIGH);
+                    }
+                    else if(led.equals("lamp2")){
+                      DEBUG_SERIAL.printf("[lamp1] RESPONSE: %s\n", led);
+                       if(outputStatus==0)
+                          digitalWrite(livingRoomLamp2, LOW);
+                        else
+                          digitalWrite(livingRoomLamp2, HIGH);
+                    }
+                     else if(led.equals("lamp3")){
+                      DEBUG_SERIAL.printf("[lamp1] RESPONSE: %s\n", led);
+                       if(outputStatus==0)
+                          digitalWrite(livingRoomLamp3, LOW);
+                        else
+                          digitalWrite(livingRoomLamp3, HIGH);
+                    }
+                    else if(led.equals("lamp4")){
+                      DEBUG_SERIAL.printf("[lamp1] RESPONSE: %s\n", led);
+                       if(outputStatus==0)
+                          digitalWrite(livingRoomLamp4, LOW);
+                        else
+                          digitalWrite(livingRoomLamp4, HIGH);
+                    }
+  
+  }
+void bedRoom(String str){
+            int index=str.indexOf(":");
+            String led=str.substring(0,index);
+            int outputStatus=str.substring(index+1,str.length()).toInt();
+            
+                    if( led.equals("lamp1")){
+                      DEBUG_SERIAL.printf("[lamp1] RESPONSE: %s\n", led);
+//                       if(outputStatus==0)
+//                          digitalWrite(livingRoomLamp1, LOW);
+//                        else
+//                          digitalWrite(livingRoomLamp1, HIGH);
+                    }
+                    else if(led.equals("lamp2")){
+                      DEBUG_SERIAL.printf("[lamp2] RESPONSE: %s\n", led);
+//                       if(outputStatus==0)
+//                          digitalWrite(livingRoomLamp2, LOW);
+//                        else
+//                          digitalWrite(livingRoomLamp2, HIGH);
+                    }
+                     else if(led.equals("lamp3")){
+                      DEBUG_SERIAL.printf("[lamp3] RESPONSE: %s\n", led);
+//                       if(outputStatus==0)
+//                          digitalWrite(livingRoomLamp3, LOW);
+//                        else
+//                          digitalWrite(livingRoomLamp3, HIGH);
+                    }
+         
+  
+  }
+void garage(String str){
+            int index=str.indexOf(":");
+            String led=str.substring(0,index);
+            int outputStatus=str.substring(index+1,str.length()).toInt();
+            
+                    if( led.equals("door")){
+                      DEBUG_SERIAL.printf("[door] RESPONSE: %s\n", led);
+//                       if(outputStatus==0)
+//                          digitalWrite(livingRoomLamp1, LOW);
+//                        else
+//                          digitalWrite(livingRoomLamp1, HIGH);
+                    }
+                   
+  
+  }
  
 void setup() {
    // Set output pins
@@ -119,10 +207,11 @@ void loop() {
 
   livingRoomButton1();
   livingRoomButton2();
-    livingRoomButton3();
+  livingRoomButton3();
   livingRoomButton4();
 
 }
+
 /*
 * manage livingroom button 1
 */
