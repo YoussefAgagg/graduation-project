@@ -19,8 +19,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
     private  final RoomService roomService;
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-       String username=loginService.getUsernameFromHeader(session);
+    public void afterConnectionEstablished(WebSocketSession session)  {
+       String username=loginService.getUsernameFromSessionHeader(session);
         if (loginService.isUsernameSessionExist(username)){
             throw new RuntimeException("user already login");
         }
@@ -30,7 +30,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String username=loginService.getUsernameFromHeader(session);
+        String username=loginService.getUsernameFromSessionHeader(session);
         log.debug("Send from: {}", username);
         roomService.updateRoomDevicesStatus(message.getPayload());
         log.debug("rooms {}",roomService.getAllRooms());
@@ -41,7 +41,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        String username=loginService.getUsernameFromHeader(session);
+        String username=loginService.getUsernameFromSessionHeader(session);
         log.debug("remove : {}", username);
         loginService.removeUserWebSocketSession(session);
     }
