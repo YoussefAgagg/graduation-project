@@ -191,7 +191,7 @@ void setup() {
     DEBUG_SERIAL.print("Local IP: "); DEBUG_SERIAL.println(WiFi.localIP());
     // server address, port and URL
   //  webSocket.begin("testwebsocketconection.herokuapp.com",80, "/trigger");
-   webSocket.begin("192.168.1.6",8080, "/connect");
+   webSocket.begin("192.168.1.5",8080, "/connect");
    webSocket.setAuthorization("esp","password"); 
     // event handler
     webSocket.onEvent(webSocketEvent);
@@ -220,14 +220,14 @@ void livingRoomButton1(){
   if(livingRoomButtonState1==0){
     
     if(previuseStateLivingRoomButton1!=livingRoomButtonState1){
-              webSocket.sendTXT("livingRoomLamp1:0");
+              webSocket.sendTXT("livingRoom:lamp1:0");
               digitalWrite(livingRoomLamp1, LOW);
     }
      
  }else{
     
     if(previuseStateLivingRoomButton1!=livingRoomButtonState1){
-    webSocket.sendTXT("livingRoomLamp1:1");
+    webSocket.sendTXT("livingRoom:lamp1:1");
     digitalWrite(livingRoomLamp1, HIGH);
     }
   }
@@ -241,13 +241,13 @@ void livingRoomButton2(){
  if(livingRoomButtonState2==0){
    
     if(previuseStateLivingRoomButton2!=livingRoomButtonState2){
-    webSocket.sendTXT("livingRoomLamp2:0");
+    webSocket.sendTXT("livingRoom:lamp2:0");
      digitalWrite(livingRoomLamp2, LOW);
     }
  }else{
     
     if(previuseStateLivingRoomButton2!=livingRoomButtonState2){
-    webSocket.sendTXT("livingRoomLamp2:1");
+    webSocket.sendTXT("livingRoom:lamp2:1");
     digitalWrite(livingRoomLamp2, HIGH);
     }
   }  
@@ -261,13 +261,13 @@ void livingRoomButton3(){
  if(livingRoomButtonState3==0){
    
     if(previuseStateLivingRoomButton3!=livingRoomButtonState3){
-    webSocket.sendTXT("livingRoomLamp3:0");
+    webSocket.sendTXT("livingRoom:lamp3:0");
      digitalWrite(livingRoomLamp3, LOW);
     }
  }else{
     
     if(previuseStateLivingRoomButton3!=livingRoomButtonState3){
-    webSocket.sendTXT("livingRoomLamp3:1");
+    webSocket.sendTXT("livingRoom:lamp3:1");
     digitalWrite(livingRoomLamp3, HIGH);
     }
   }
@@ -283,14 +283,14 @@ void livingRoomButton4(){
    
     if(previuseStateLivingRoomButton4!=livingRoomButtonState4){
       Serial.print ( "button 4 not clicked" );
-    webSocket.sendTXT("livingRoomLamp4:0");
+    webSocket.sendTXT("livingRoom:lamp4:0");
      digitalWrite(livingRoomLamp4, LOW);
     }
  }else{
     
     if(previuseStateLivingRoomButton4!=livingRoomButtonState4){
       Serial.print ( "button 4 clicked" );
-    webSocket.sendTXT("livingRoomLamp4:1");
+    webSocket.sendTXT("livingRoom:lamp4:1");
     digitalWrite(livingRoomLamp4, HIGH);
     }
   }
