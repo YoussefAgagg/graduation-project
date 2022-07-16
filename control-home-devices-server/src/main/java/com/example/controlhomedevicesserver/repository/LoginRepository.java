@@ -1,5 +1,7 @@
 package com.example.controlhomedevicesserver.repository;
 
+import com.example.controlhomedevicesserver.aop.logging.Loggable;
+import com.example.controlhomedevicesserver.model.UserSession;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -10,27 +12,30 @@ import java.util.Map;
 
 @Repository
 public class LoginRepository {
-    private static final Map<String, WebSocketSession> usersWebSocketSessions = new HashMap<>();
+    private static final Map<UserSession, WebSocketSession> usersWebSocketSessions = new HashMap<>();
 
-    public void addNewUserWebSocketSession(String username, WebSocketSession session){
-        usersWebSocketSessions.put(username, session);
+    @Loggable
+    public void addNewUserWebSocketSession(UserSession userSession, WebSocketSession session){
+        usersWebSocketSessions.put(userSession, session);
     }
-    public WebSocketSession getWebSocketSessionByUsername(String username){
-        return usersWebSocketSessions.get(username);
-    }
+
+    @Loggable
     public boolean isUsernameExist(String username){
-        return usersWebSocketSessions.containsKey(username);
-    }
-    public void removeUserWebSocketSession(String username){
-        usersWebSocketSessions.remove(username);
-
+        return usersWebSocketSessions.keySet().stream()
+            .anyMatch(userSession -> userSession.getUsername().equals(username));
     }
 
+    @Loggable
+    public void removeUserWebSocketSession(UserSession userSession){
+        usersWebSocketSessions.remove(userSession);
 
-    public List<WebSocketSession> getAllWebSocketSessionsExceptUsername(String username) {
+    }
+
+    @Loggable
+    public List<WebSocketSession> getAllWebSocketSessionsExceptUsername(UserSession userSession) {
         List<WebSocketSession> webSocketSessions=new ArrayList<>();
         usersWebSocketSessions.forEach((k,v)->{
-            if(!username.equals(k)) webSocketSessions.add(v);
+            if(!userSession.equals(k)) webSocketSessions.add(v);
 
         });
         return webSocketSessions;

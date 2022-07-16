@@ -1,12 +1,11 @@
 package com.example.controlhomedevicesserver.service;
 
 import com.example.controlhomedevicesserver.aop.logging.Loggable;
+import com.example.controlhomedevicesserver.model.UserSession;
 import com.example.controlhomedevicesserver.repository.LoginRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -20,22 +19,32 @@ import java.util.List;
 public class LoginService {
 
     private final LoginRepository loginRepository;
+
     @Loggable
     public void addNewUserWebSocketSession(WebSocketSession session){
-        loginRepository.addNewUserWebSocketSession(getUsernameFromSessionHeader(session), session);
+        UserSession userSession = getUserSession(session);
+        loginRepository.addNewUserWebSocketSession(userSession, session);
     }
     @Loggable
     public List<WebSocketSession> getAllWebSocketSessionsExcept(WebSocketSession session){
-       return loginRepository.getAllWebSocketSessionsExceptUsername(getUsernameFromSessionHeader(session));
+        UserSession userSession = getUserSession(session);
+        return loginRepository.getAllWebSocketSessionsExceptUsername(userSession);
     }
+
+    private UserSession getUserSession(WebSocketSession session) {
+        return new UserSession(
+            getUsernameFromSessionHeader(session),
+            session.getId());
+    }
+
     @Loggable
     public boolean isUsernameSessionExist(String username){
        return loginRepository.isUsernameExist(username);
     }
     @Loggable
     public void removeUserWebSocketSession(WebSocketSession session){
-
-        loginRepository.removeUserWebSocketSession(getUsernameFromSessionHeader(session));
+        UserSession userSession = getUserSession(session);
+        loginRepository.removeUserWebSocketSession(userSession);
     }
 
     /**
