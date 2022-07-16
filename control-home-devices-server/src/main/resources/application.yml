@@ -3,5 +3,4 @@ logging:
   level:
     ROOT: Error
     org.springframework.web : DEBUG
-    org.springframework.security: DEBUG
     com.example.controlhomedevicesserver: DEBUG
