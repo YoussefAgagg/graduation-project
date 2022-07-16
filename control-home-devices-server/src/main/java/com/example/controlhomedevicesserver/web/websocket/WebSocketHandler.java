@@ -2,7 +2,6 @@ package com.example.controlhomedevicesserver.web.websocket;
 
 import com.example.controlhomedevicesserver.service.LoginService;
 import com.example.controlhomedevicesserver.service.RoomService;
-import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -18,10 +17,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
   private final LoginService loginService;
   private final RoomService roomService;
-  private static final CloseStatus LOGEDIN_FROM_OTHER_DEVICE = new CloseStatus(4001);
 
   @Override
-  public void afterConnectionEstablished(WebSocketSession session) throws IOException {
+  public void afterConnectionEstablished(WebSocketSession session){
     loginService.addNewUserWebSocketSession(session);
     log.debug("connected :" + session);
   }
@@ -38,7 +36,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
   }
 
   @Override
-  public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+  public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
     log.debug("remove : {}", session);
     loginService.removeUserWebSocketSession(session);
   }

@@ -3,7 +3,6 @@ package com.example.controlhomedevicesserver;
 import com.example.controlhomedevicesserver.model.Device;
 import com.example.controlhomedevicesserver.model.Room;
 import com.example.controlhomedevicesserver.repository.RoomRepository;
-import com.example.controlhomedevicesserver.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;

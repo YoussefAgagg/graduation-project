@@ -22,11 +22,7 @@ public class RoomRepository {
         if (rooms.containsKey(roomName))
             rooms.get(roomName).getDevices().put(device.getName(),device);
     }
-    public Device getDeviceInRoomByName(String roomName, String deviceName){
-        if (rooms.containsKey(roomName))
-            return rooms.get(roomName).getDevices().get(deviceName);
-        return null;
-    }
+
     @Loggable
     public void updateRoomDevicesStatus(String message){
         String[] split=message.split(":",3);
