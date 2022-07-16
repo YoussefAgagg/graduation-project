@@ -1,12 +1,10 @@
 // GPIO2 input pins
-// living room
 uint8_t livingRoomLampButton1 = D0;
 uint8_t livingRoomLampButton2 = D1;
 uint8_t livingRoomLampButton3 = D2;
 uint8_t livingRoomLampButton4 = D4;
 
 // GPIO2 output pins
-// room leds output
 uint8_t relayPin1 = D5;
 uint8_t relayPin2 = D6;
 uint8_t relayPin3 = D7;
