@@ -1,23 +1,23 @@
 // GPIO2 input pins
-// uint8_t garageDoorButton = D0;
+int garageDoorButton = 13; //D13;
 
 // GPIO2 output pins
-// uint8_t relayPin8 = D5;
+int relayPin8 = 2; //D2;
 
 void setupGarageInputOutpt()
 {
   DEBUG_SERIAL.printf("setup garage input ,outpit pins");
-  /*
+  
    // Set output pins
   pinMode(relayPin8, OUTPUT);
 
     // Set input pins
-  pinMode(garageDoorButton, INPUT);*/
+  pinMode(garageDoorButton, INPUT);
 }
 
 bool isOpened = false;
 void garage()
-{/*
+{
   int currentState = digitalRead(garageDoorButton);
   if (currentState == 0 && isOpened)
   {
@@ -31,12 +31,12 @@ void garage()
      webSocket.sendTXT("garage:door:1");
      openDoor();
   
-  }*/
+  }
  
 }
 
 void garage(String str)
-{/*
+{
   int index = str.indexOf(":");
   String led = str.substring(0, index);
   int outputStatus = str.substring(index + 1, str.length()).toInt();
@@ -52,7 +52,7 @@ void garage(String str)
       isOpened = true;
       openDoor();
     }
-  }*/
+  }
 }
 void openDoor(){}
 void closeDoor(){}

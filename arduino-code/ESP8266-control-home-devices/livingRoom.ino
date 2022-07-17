@@ -1,14 +1,14 @@
 // GPIO2 input pins
-uint8_t livingRoomLampButton1 = D0;
-uint8_t livingRoomLampButton2 = D1;
-uint8_t livingRoomLampButton3 = D2;
-uint8_t livingRoomLampButton4 = D4;
+int livingRoomLampButton1 = 32;// D32;
+int livingRoomLampButton2 = 33; // D33;
+int livingRoomLampButton3 = 25; // D25;
+int livingRoomLampButton4 = 26; // D26;
 
 // GPIO2 output pins
-uint8_t relayPin1 = D5;
-uint8_t relayPin2 = D6;
-uint8_t relayPin3 = D7;
-uint8_t relayPin4 = D8;
+int relayPin1 = 23; //D23;
+int relayPin2 = 22; //D22;
+int relayPin3 = 21; //D21;
+int relayPin4 = 19; //D19;
 
 int previuseStateLivingRoomButton1 = 0;
 int previuseStateLivingRoomButton2 = 0;
