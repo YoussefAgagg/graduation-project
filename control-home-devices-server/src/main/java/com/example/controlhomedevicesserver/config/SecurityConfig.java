@@ -31,12 +31,17 @@ public class SecurityConfig {
                 .password("password")
                 .roles("USER")
                 .build();
-        UserDetails espClient = User.withDefaultPasswordEncoder()
-                .username("esp")
+        UserDetails espClient1 = User.withDefaultPasswordEncoder()
+                .username("esp1")
                 .password("password")
                 .roles("USER")
                 .build();
-        return new InMemoryUserDetailsManager(List.of(mobileClient,espClient));
+        UserDetails espClient2 = User.withDefaultPasswordEncoder()
+            .username("esp2")
+            .password("password")
+            .roles("USER")
+            .build();
+        return new InMemoryUserDetailsManager(List.of(mobileClient,espClient1,espClient2));
     }
 
 }
