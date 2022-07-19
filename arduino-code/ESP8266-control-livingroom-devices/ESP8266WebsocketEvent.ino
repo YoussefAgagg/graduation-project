@@ -21,16 +21,7 @@ void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
             String device = str.substring(index + 1, str.length());
             livingRoom(device);
         }
-        else if (room.equals("bedRoom"))
-        {
-            String device = str.substring(index + 1, str.length());
-            bedRoom(device);
-        }
-        else if (room.equals("garage"))
-        {
-            String device = str.substring(index + 1, str.length());
-            garage(device);
-        }
+
 
         DEBUG_SERIAL.printf("[WSc] RESPONSE: %s\n", str);
     }
