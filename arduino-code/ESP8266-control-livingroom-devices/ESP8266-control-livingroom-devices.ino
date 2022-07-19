@@ -3,7 +3,7 @@
  */
 
 #include <Arduino.h>
-//#include <ESP8266WiFi.h>
+#include <ESP8266WiFi.h>
 #include <WebSocketsClient.h>
 
 #define DEBUG_SERIAL Serial
@@ -19,8 +19,7 @@ bool connected = false;
 void setup()
 {
   setupLivingRoomInputOutpt();
-  setupBedRoomInputOutpt();
-  setupGarageInputOutpt();
+
   DEBUG_SERIAL.begin(115200);
   DEBUG_SERIAL.printf("try to connect to the wifi");
 
@@ -45,6 +44,4 @@ void loop()
   webSocket.loop();
 
   livingRoom();
-  bedRoom();
-  garage();
 }

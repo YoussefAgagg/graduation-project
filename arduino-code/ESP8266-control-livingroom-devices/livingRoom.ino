@@ -1,40 +1,36 @@
 // GPIO2 input pins
-int livingRoomLampButton1 = 32;// D32;
-int livingRoomLampButton2 = 33; // D33;
-int livingRoomLampButton3 = 25; // D25;
-int livingRoomLampButton4 = 26; // D26;
+uint8_t livingRoomLampButton1 = D0;
+uint8_t livingRoomLampButton2 = D1; 
+uint8_t livingRoomLampButton3 = D2; 
+
 
 // GPIO2 output pins
-int relayPin1 = 23; //D23;
-int relayPin2 = 22; //D22;
-int relayPin3 = 21; //D21;
-int relayPin4 = 19; //D19;
+uint8_t relayPin1 = D5; 
+uint8_t relayPin2 = D6; 
+uint8_t relayPin3 = D7; 
+
 
 int previuseStateLivingRoomButton1 = 0;
 int previuseStateLivingRoomButton2 = 0;
 int previuseStateLivingRoomButton3 = 0;
-int previuseStateLivingRoomButton4 = 0;
 
 void setupLivingRoomInputOutpt()
 {
-  DEBUG_SERIAL.printf("setup livingroom input ,outpit pins");
+  DEBUG_SERIAL.printf("setup livingroom input ,outpit pins\n");
   // Set output pins
   pinMode(relayPin1, OUTPUT);
   pinMode(relayPin2, OUTPUT);
   pinMode(relayPin3, OUTPUT);
-  pinMode(relayPin4, OUTPUT);
   // Set input pins
   pinMode(livingRoomLampButton1, INPUT);
   pinMode(livingRoomLampButton2, INPUT);
   pinMode(livingRoomLampButton3, INPUT);
-  pinMode(livingRoomLampButton4, INPUT);
 }
 void livingRoom()
 {
   livingRoomButton1();
   livingRoomButton2();
   livingRoomButton3();
-  livingRoomButton4();
 }
 
 /*
@@ -47,6 +43,7 @@ void livingRoomButton1()
   {
     if (previuseStateLivingRoomButton1 != currentState)
     {
+      Serial.println("button 1 not clicked");
       webSocket.sendTXT("livingRoom:lamp1:0");
       digitalWrite(relayPin1, LOW);
     }
@@ -56,6 +53,7 @@ void livingRoomButton1()
 
     if (previuseStateLivingRoomButton1 != currentState)
     {
+      Serial.println("button 1 clicked");
       webSocket.sendTXT("livingRoom:lamp1:1");
       digitalWrite(relayPin1, HIGH);
     }
@@ -73,6 +71,7 @@ void livingRoomButton2()
 
     if (previuseStateLivingRoomButton2 != currentState)
     {
+      Serial.println("button 2 not clicked");
       webSocket.sendTXT("livingRoom:lamp2:0");
       digitalWrite(relayPin2, LOW);
     }
@@ -82,6 +81,7 @@ void livingRoomButton2()
 
     if (previuseStateLivingRoomButton2 != currentState)
     {
+      Serial.println("button 2 clicked");
       webSocket.sendTXT("livingRoom:lamp2:1");
       digitalWrite(relayPin2, HIGH);
     }
@@ -96,53 +96,29 @@ void livingRoomButton3()
   int currentState = digitalRead(livingRoomLampButton3);
   if (currentState == 0)
   {
+    
 
     if (previuseStateLivingRoomButton3 != currentState)
     {
+      Serial.println("button 3 not clicked");
       webSocket.sendTXT("livingRoom:lamp3:0");
       digitalWrite(relayPin3, LOW);
     }
   }
   else
   {
+    
 
     if (previuseStateLivingRoomButton3 != currentState)
     {
+      Serial.println("button 3 clicked");
       webSocket.sendTXT("livingRoom:lamp3:1");
       digitalWrite(relayPin3, HIGH);
     }
   }
   previuseStateLivingRoomButton3 = currentState;
 }
-/*
- * manage livingroom button 4
- */
-void livingRoomButton4()
-{
 
-  int currentState = digitalRead(livingRoomLampButton4);
-  if (currentState == 0)
-  {
-
-    if (previuseStateLivingRoomButton4 != currentState)
-    {
-      Serial.print("button 4 not clicked");
-      webSocket.sendTXT("livingRoom:lamp4:0");
-      digitalWrite(relayPin4, LOW);
-    }
-  }
-  else
-  {
-
-    if (previuseStateLivingRoomButton4 != currentState)
-    {
-      Serial.print("button 4 clicked");
-      webSocket.sendTXT("livingRoom:lamp4:1");
-      digitalWrite(relayPin4, HIGH);
-    }
-  }
-  previuseStateLivingRoomButton4 = currentState;
-}
 
 void livingRoom(String str)
 {
@@ -173,13 +149,5 @@ void livingRoom(String str)
       digitalWrite(relayPin3, LOW);
     else
       digitalWrite(relayPin3, HIGH);
-  }
-  else if (led.equals("lamp4"))
-  {
-    DEBUG_SERIAL.printf("[lamp1] RESPONSE: %s\n", led);
-    if (outputStatus == 0)
-      digitalWrite(relayPin4, LOW);
-    else
-      digitalWrite(relayPin4, HIGH);
   }
 }
