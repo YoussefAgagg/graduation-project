@@ -27,8 +27,7 @@ public class Runner  implements CommandLineRunner {
         Device lamp1=new Device("lamp1",0);
         Device lamp2=new Device("lamp2",0);
         Device lamp3=new Device("lamp3",0);
-        Device lamp4=new Device("lamp4",0);
-        room.setDevices(Map.of(lamp1.getName(),lamp1,lamp2.getName(),lamp2,lamp3.getName(),lamp3,lamp4.getName(),lamp4));
+        room.setDevices(Map.of(lamp1.getName(),lamp1,lamp2.getName(),lamp2,lamp3.getName(),lamp3));
         return room;
     }
     private Room createBedRoom() {
@@ -36,8 +35,7 @@ public class Runner  implements CommandLineRunner {
         room.setName("bedRoom");
         Device lamp1=new Device("lamp1",0);
         Device lamp2=new Device("lamp2",0);
-        Device lamp3=new Device("lamp3",0);
-        room.setDevices(Map.of(lamp1.getName(),lamp1,lamp2.getName(),lamp2,lamp3.getName(),lamp3));
+        room.setDevices(Map.of(lamp1.getName(),lamp1,lamp2.getName(),lamp2));
         return room;
     }
     private Room createGarage() {
