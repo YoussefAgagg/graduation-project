@@ -8,7 +8,7 @@ class kitchen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: const Text('kitchen'),
+      body: const Center(child: Text('wait to add ')),
     );
   }
 }

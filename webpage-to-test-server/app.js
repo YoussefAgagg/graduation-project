@@ -1,8 +1,8 @@
 // Create WebSocket connection.
-//const socket = new WebSocket('ws://192.168.1.10:8080/trigger');
+//const socket = new WebSocket('ws://192.168.1.4:8080/trigger');
 //https://testwebsocketconection.herokuapp.com/
 //const socket = new WebSocket('ws://testwebsocketconection.herokuapp.com/trigger');
-const socket = new WebSocket("ws://android:password@192.168.1.5:8080/connect");
+const socket = new WebSocket("ws://esp1:password@192.168.1.4:8080/connect");
 // living room
 var isLed1On = false;
 var isLed2On = false;

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get.dart';
 import 'package:smart_home/controllers/homescreencontroller.dart';
+import 'package:smart_home/modules/home_module/rooms_screen/bedroom.dart';
 import 'package:smart_home/modules/home_module/rooms_screen/garage.dart';
+import 'package:smart_home/modules/home_module/rooms_screen/kitchen.dart';
 import 'package:smart_home/modules/home_module/rooms_screen/living_room.dart';
 import 'package:smart_home/shared/AppSpaces.dart';
 import 'package:smart_home/shared/components/componanets.dart';
@@ -55,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  onTap: (){
                    setState(() {
                      controller.setIndex(1);
-                     navigateTo(context,const garage());
+                     navigateTo(context, Bedroom());
                    });
                  },
                  text: 'Bedroom',
@@ -71,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  onTap: (){
                    setState(() {
                      controller.setIndex(2);
-                     navigateTo(context,const garage());
+                     navigateTo(context, const kitchen());
                    });
                  },
                  text: 'Office',
@@ -83,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  onTap: (){
                    setState(() {
                      controller.setIndex(3);
-                     navigateTo(context,const garage());
+                     navigateTo(context, const kitchen());
                    });
                  },
                  text: 'Kitchen',
@@ -99,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  onTap: (){
                    setState(() {
                      controller.setIndex(4);
-                     navigateTo(context,const garage());
+                     navigateTo(context, const kitchen());
                    });
                  },
                  text: 'Bathroom',
@@ -111,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  onTap: (){
                    setState(() {
                      controller.setIndex(5);
-                     navigateTo(context,const garage());
+                     navigateTo(context, garage());
                    });
                  },
                  text: 'Garage',

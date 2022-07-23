@@ -13,13 +13,12 @@ class Server {
 
    channelConnect(){ //function to connect
     try{
-      socket = IOWebSocketChannel.connect("ws://testwebsocketconection.herokuapp.com/trigger");
+      socket = IOWebSocketChannel.connect("ws://android:password@192.168.1.4:8080/connect");
       connected = true;//channel IP : Port
       socket.stream.listen((message) {
         debugPrint(message);
         // socket.sink.add('received!');
         connected = true;
-
         if (message == "Hello Server!") {
           connected = true; //message is "connected" from NodeMCU
         }
