@@ -19,7 +19,6 @@ class Server {
         debugPrint(message);
         // socket.sink.add('received!');
         connected = true;
-
         if (message == "Hello Server!") {
           connected = true; //message is "connected" from NodeMCU
         }

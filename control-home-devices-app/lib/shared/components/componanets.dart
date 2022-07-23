@@ -133,7 +133,8 @@ Widget roomBuildItem (
            // color: !isSelected ? ChooseColor.defaultBackgroundColor: ChooseColor.defaultColor,
             //!isSelected ? Colors.grey[100] : const Color(0xFF1A5276),
           ),
-          child: Column(children: [
+          child: Column(
+              children: [
             AppSpaces.vertical15,
             Center(
               child: SizedBox(

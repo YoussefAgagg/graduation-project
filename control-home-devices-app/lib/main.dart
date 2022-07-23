@@ -11,7 +11,10 @@ import 'package:web_socket_channel/io.dart';
 
 
 import 'layout/home_layout.dart';
+import 'modules/home_module/home_screen.dart';
 import 'modules/home_module/login_page/shop_login_screen.dart';
+import 'modules/home_module/rooms_screen/bedroom.dart';
+import 'modules/home_module/rooms_screen/garage.dart';
 
 void main() async{
 
@@ -69,11 +72,12 @@ class MyApp extends StatelessWidget {
               primaryColor:  Colors.grey[100],
               // backgroundColor: const Color(0xFF1A5276),
               disabledColor: Colors.grey[100],
+              scaffoldBackgroundColor: Colors.white,
               //colorScheme: ColorScheme.fromSwatch(accentColor: const Color(0xffaf92ea)),
               visualDensity: VisualDensity.adaptivePlatformDensity,
               //primarySwatch: Colors.blue,
             ),
-            home:  AppLoginScreen(),
+            home:  HomeLayout(),
           );
         },
       ),

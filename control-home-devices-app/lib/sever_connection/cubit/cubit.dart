@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/modules/setting_module/setting_screen.dart';
 import 'package:smart_home/sever_connection/cubit/states.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
@@ -28,16 +29,22 @@ class ServerCubit extends Cubit<ServerStates> {
   final StreamController<dynamic> _recipientCtrl = StreamController<dynamic>();
   final StreamController<dynamic> _sentCtrl = StreamController<dynamic>();
     int? delay;
-  final String endpoint='ws://192.168.1.4:8080/connect';
+      String ? ip = SettingScreen.ip ;
+   String endpoint='ws://${SettingScreen.ip}:8080/connect';
     //  'ws://android:password@192.168.1.4:8080/connect';
      // 'ws://testwebsocketconection.herokuapp.com/trigger' ;
-  bool tableLightIsOn = false;
-  bool mainLightIsOn = false;
-  bool floorLightIsOn = false;
+  bool livingRoomTableLightIsOn = false;
+  bool livingRoomMainLightIsOn = false;
+  bool livingRoomFloorLightIsOn = false;
+  bool bedRoomTableLightIsOn = false;
+  bool bedRoomMainLightIsOn = false;
+  bool garageDoorIsOn = false;
   bool wifiIsOn = false;
   bool tvLightIsOn = false;
   bool airConditionIsOn = false;
-  bool connected = false;
+   bool  connected = false;
+  static String ? username ;
+  static String ? password;
 
 
 
@@ -56,21 +63,15 @@ class ServerCubit extends Cubit<ServerStates> {
 
   get sink => _sentCtrl.sink;
 
-  // AutoReconnectWebSocket(endpoint, {delay = 5}) {
-  //   socket!.stream.listen((event) {
-  //     socket!.sink.add(event);
-  //   });
-  //   connect();
-  //   emit(ReConnectServer());
-  // }
+
 
   void connect() async{
-    String username = 'android';
-    String password = 'password';
-    // String userpass = 'android:password';
+    print('print ');
+    print(username);
+    print(password);
+
     String basicAuth =
         'Basic ' + base64.encode(utf8.encode('$username:$password'));
-
 
     socket = IOWebSocketChannel.connect(
       endpoint ,
@@ -78,7 +79,6 @@ class ServerCubit extends Cubit<ServerStates> {
       'Authorization': basicAuth  ,
     },);
     print(basicAuth);
-
     connected = true;
     emit(ConnectServer());
     debugPrint('Web socket is connect');
@@ -86,22 +86,32 @@ class ServerCubit extends Cubit<ServerStates> {
       // _recipientCtrl.add(event);
         debugPrint(message);
        if(message == "livingRoom:lamp1:1"){
-        mainLightIsOn = true;
+        livingRoomMainLightIsOn = true;
         }else if(message == "livingRoom:lamp1:0"){
-         mainLightIsOn = false;
-        } else if(message == "livingRoomLamp2:1"){
-          tableLightIsOn = true;
-        }else if(message == "livingRoomLamp2:0"){
-          tableLightIsOn = false;
-        } else if(message == "livingRoomLamp3:1"){
-          floorLightIsOn = true;
-        } else if(message == "livingRoomLamp3:0"){
-          floorLightIsOn = false;
-        } else if(message == "livingRoomLamp4:1"){
-          tvLightIsOn = true;
-        } else if(message == "livingRoomLamp4:0"){
-          tvLightIsOn = false;
-        }
+         livingRoomMainLightIsOn = false;
+        } else if(message == "livingRoom:lamp2:1"){
+          livingRoomTableLightIsOn = true;
+        }else if(message == "livingRoom:lamp2:0"){
+          livingRoomTableLightIsOn = false;
+        } else if(message == "livingRoom:lamp3:1"){
+          livingRoomFloorLightIsOn = true;
+        } else if(message == "livingRoom:lamp3:0"){
+          livingRoomFloorLightIsOn = false;
+        } else if(message == "bedRoom:lamp1:1"){
+         bedRoomMainLightIsOn = true;
+        } else if(message == "bedRoom:lamp1:0"){
+         bedRoomMainLightIsOn = false;
+        }else if(message == "bedRoom:lamp2:1"){
+         bedRoomTableLightIsOn = true;
+       } else if(message == "bedRoom:lamp2:0"){
+         bedRoomTableLightIsOn = false;
+       }
+       else if(message == "garage:door:1"){
+         garageDoorIsOn = true;
+       } else if(message == "garage:door:0"){
+         garageDoorIsOn = false;
+       }
+
          emit(ListenMessage());
     }
     , onError: (e) async {
@@ -121,39 +131,7 @@ class ServerCubit extends Cubit<ServerStates> {
 
   }
 
-  Future<void> listenCmd(String cmd) async {
 
-    if(connected == true){
-     // request true or flase
-      socket!.stream.listen((message) {
-        // _recipientCtrl.add(event);
-        // debugPrint(message);
-        if (message == "livingRoom:lamp1:1") {
-          mainLightIsOn = true;
-        } else if (message == "livingRoom:lamp1:0") {
-          mainLightIsOn = false;
-        } else if (message == "livingRoomLamp2:1") {
-          tableLightIsOn = true;
-        } else if (message == "livingRoomLamp2:0") {
-          tableLightIsOn = false;
-        } else if (message == "livingRoomLamp3:1") {
-          floorLightIsOn = true;
-        } else if (message == "livingRoomLamp3:0") {
-          floorLightIsOn = false;
-        } else if (message == "livingRoomLamp4:1") {
-          tvLightIsOn = true;
-        } else if (message == "livingRoomLamp4:0") {
-          tvLightIsOn = false;
-        }
-        emit(ListenMessage());
-      });
-    }else{
-      debugPrint("Websockets is not connected.");
-      connect();
-
-
-    }
-  }
 
   Future<void> sendCmd(String cmd) async {
 
@@ -167,12 +145,13 @@ class ServerCubit extends Cubit<ServerStates> {
     }
   }
 
+
   void login(String  email ,String  password) async {
     emit(AppLoginLoadingState());
-    print (email+'  '+password);
+    print ('username:'+email+'  '+'password:'+password);
     try{
       Response  response = await http.post(
-        Uri.parse('http://192.168.1.4:8080/login'),
+        Uri.parse('http://${SettingScreen.ip}:8080/login'),
         body: jsonEncode({
           "username":email,
           "password":password
