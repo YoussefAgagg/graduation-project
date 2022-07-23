@@ -15,119 +15,6 @@ class LivingRoom extends StatelessWidget {
   // final Size size;
 
 
- //  bool tableLightIsOn = false;
- //  bool mainLightIsOn = false;
- //  bool floorLightIsOn = false;
- //  bool wifiIsOn = false;
- //  bool tvLightIsOn = false;
- //  bool airConditionIsOn = false;
- //  String on = 'on';
- //  String off = 'off';
- //  late IOWebSocketChannel socket ;
- //  var connected = false;
- //
- //  // @override
- //  // void initState() {
- //  //   tableLightIsOn = false; //initially isLed1On is off so its FALSE
- //  //   floorLightIsOn = false; //initially isLed2On is off so its FALSE
- //  //   connected = false; //initially connection status is "NO" so its FALSE
- //  //
- //  //   Future.delayed(Duration.zero,() async {
- //  //     channelConnect();
- //  //     //connect to WebSocket wth NodeMCU
- //  //   });
- //  //
- //  //   super.initState();
- //  // }
- //
- // // ws://testwebsocketconection.herokuapp.com/trigger
- //  //ws://testwebsocketconection.herokuapp.com/trigger
- // // ws://192.168.43.14:8080/connect
- //  channelConnect(){ //function to connect
- //    try{
- //      socket = IOWebSocketChannel.connect("ws://android:password@192.168.1.4:8080/connect");
- //      connected = true;
- //      debugPrint('Web socket is connect');
- //       //channel IP : Port
- //      socket.stream.listen((message) {
- //        debugPrint(message);
- //        // socket.sink.add('received!');
- //        connected = true;
- //        // setState(() {
- //        //   if(message == "Hello Server!"){
- //        //     connected = true; //message is "connected" from NodeMCU
- //        //   }
- //        //   else if(message == "livingRoomLamp2:1"){
- //        //     tableLightIsOn = true;
- //        //   }else if(message == "livingRoomLamp2:0"){
- //        //     tableLightIsOn = false;
- //        //   } else if(message == "livingRoomLamp3:1"){
- //        //     floorLightIsOn = true;
- //        //   } else if(message == "livingRoomLamp3:0"){
- //        //     floorLightIsOn = false;
- //        //   }  else if(message == "livingRoom:lamp1:1"){
- //        //     mainLightIsOn = true;
- //        //   }else if(message == "livingRoom:lamp1:0"){
- //        //     mainLightIsOn = false;
- //        //   } else if(message == "livingRoomLamp4:1"){
- //        //     tvLightIsOn = true;
- //        //   } else if(message == "livingRoomLamp4:0"){
- //        //     tvLightIsOn = false;
- //        //   }
- //        //
- //        // });
- //      },
- //
- //        onDone: () {
- //
- //       // if WebSocket is disconnected
- //          debugPrint("Web socket is closed");
- //          // setState(() {
- //          //   connected = false;
- //          // });
- //        },
- //
- //        onError: (error) {
- //          debugPrint(error.toString());
- //        },);
- //    }catch (_){
- //      debugPrint("error on connecting to websockets.");
- //    }
- //  }
-
-
-
-  // Future<void> sendCmd(String cmd) async {
-  //   if(connected == true){
-  //     socket.stream.listen((message) {
-  //       // _recipientCtrl.add(event);
-  //       // debugPrint(message);
-  //       if (message == "livingRoom:lamp1:1") {
-  //         mainLightIsOn = true;
-  //       } else if (message == "livingRoom:lamp1:0") {
-  //         mainLightIsOn = false;
-  //       } else if (message == "livingRoomLamp2:1") {
-  //         tableLightIsOn = true;
-  //       } else if (message == "livingRoomLamp2:0") {
-  //         tableLightIsOn = false;
-  //       } else if (message == "livingRoomLamp3:1") {
-  //         floorLightIsOn = true;
-  //       } else if (message == "livingRoomLamp3:0") {
-  //         floorLightIsOn = false;
-  //       } else if (message == "livingRoomLamp4:1") {
-  //         tvLightIsOn = true;
-  //       } else if (message == "livingRoomLamp4:0") {
-  //         tvLightIsOn = false;
-  //       }
-  //     });
-  //     }else{
-  //     debugPrint("Websockets is not connected.");
-  //     // setState(() {
-  //     //   channelConnect();
-  //     // });
-  //
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -199,25 +86,25 @@ class LivingRoom extends StatelessWidget {
                                 child: switchBuildItem(
                                     onTap: (){
                                     //  cubit.connect();
-                                        if(cubit.mainLightIsOn){ //if isLed1On is true, then turn off the led
+
+                                        if(cubit.livingRoomMainLightIsOn){ //if isLed1On is true, then turn off the led
                                           //if led is on, turn off
                                           cubit.sendCmd('livingRoom:lamp1:0');
-                                          cubit.mainLightIsOn = false;
+                                          cubit.livingRoomMainLightIsOn = false;
                                         }else{ //if isLed1On is false, then turn on the led
                                           //if led is off, turn on
                                           cubit.sendCmd('livingRoom:lamp1:1');
-                                         cubit. mainLightIsOn = true;
-                                        }
-
+                                          cubit. livingRoomMainLightIsOn = true;
+                                      }
                                     },
                                     title: 'Main Light',
-                                    subtitle: cubit.mainLightIsOn ? cubit.on : cubit.off ,
+                                    subtitle: cubit.livingRoomMainLightIsOn ? cubit.on : cubit.off ,
                                     icon:  Icon(
                                       Icons.lightbulb_outline,
-                                      color:cubit.mainLightIsOn ? Colors.yellow.shade600 : Colors.black,
+                                      color:cubit.livingRoomMainLightIsOn ? Colors.yellow.shade600 : Colors.black,
                                       size: size.width*0.08,
                                     ),
-                                    lightIsOn: cubit.mainLightIsOn,
+                                    lightIsOn: cubit.livingRoomMainLightIsOn,
                                     size: size,
                                     subtitleFontSize: size.width*0.03,
                                     titleFontSize: size.width*0.04 ,
@@ -226,29 +113,26 @@ class LivingRoom extends StatelessWidget {
                               Expanded(
                                 child: switchBuildItem(
                                     onTap: (){
-                                      // setState(() {
-                                      //   channelConnect();
-                                      //   if(connected){
-                                      //     if(tableLightIsOn){ //if isLed1On is true, then turn off the led
-                                      //       //if led is on, turn off
-                                      //       sendCmd("livingRoomLamp2:0");
-                                      //       tableLightIsOn = false;
-                                      //     }else{ //if isLed1On is false, then turn on the led
-                                      //       //if led is off, turn on
-                                      //       sendCmd("livingRoomLamp2:1");
-                                      //       tableLightIsOn = true;
-                                      //     }
-                                      //   }
-                                      // })
-                                      ;},
+                                       if(cubit.connected){
+                                         if(cubit.livingRoomTableLightIsOn){ //if isLed1On is true, then turn off the led
+                                           //if led is on, turn off
+                                           cubit.sendCmd('livingRoom:lamp2:0');
+                                           cubit.livingRoomTableLightIsOn = false;
+                                         }else{ //if isLed1On is false, then turn on the led
+                                           //if led is off, turn on
+                                           cubit.sendCmd('livingRoom:lamp2:1');
+                                           cubit. livingRoomTableLightIsOn = true;
+                                         }
+                                       }
+                                       },
                                     title: 'Table lamp',
-                                    subtitle: cubit.tableLightIsOn ? cubit.on : cubit.off ,
+                                    subtitle: cubit.livingRoomTableLightIsOn ? cubit.on : cubit.off ,
                                     icon: Icon(
                                       Icons.lightbulb_outline,
-                                      color: cubit.tableLightIsOn ? Colors.yellow.shade600 : Colors.black,
+                                      color: cubit.livingRoomTableLightIsOn ? Colors.yellow.shade600 : Colors.black,
                                       size: iconSize,
                                     ),
-                                    lightIsOn: cubit.tableLightIsOn,
+                                    lightIsOn: cubit.livingRoomTableLightIsOn,
                                     size: size,
                                   titleFontSize: size.width*0.04
                                 ),
@@ -256,28 +140,24 @@ class LivingRoom extends StatelessWidget {
                               Expanded(
                                 child: switchBuildItem(
                                     onTap: (){
-                                      // setState(() {
-                                      //   channelConnect();
-                                      //   if(floorLightIsOn){ //if isLed1On is true, then turn off the led
-                                      //     //if led is on, turn off
-                                      //     sendCmd("livingRoomLamp3:0");
-                                      //     floorLightIsOn = false;
-                                      //   }else{ //if isLed1On is false, then turn on the led
-                                      //     //if led is off, turn on
-                                      //     sendCmd("livingRoomLamp3:1");
-                                      //     floorLightIsOn = true;
-                                      //   }
-                                      //  // floorLightIsOn = !floorLightIsOn;
-                                      // });
-                                      },
+                                      if(cubit.connected){
+                                        if(cubit.livingRoomFloorLightIsOn){ //if isLed1On is true, then turn off the led
+                                          //if led is on, turn off
+                                          cubit.sendCmd('livingRoom:lamp3:0');
+                                          cubit.livingRoomFloorLightIsOn = false;
+                                        }else{ //if isLed1On is false, then turn on the led
+                                          //if led is off, turn on
+                                          cubit.sendCmd('livingRoom:lamp3:1');
+                                          cubit. livingRoomFloorLightIsOn = true;
+                                        }}},
                                     title: 'Floor Lamp',
-                                    subtitle: cubit.floorLightIsOn ? cubit.on : cubit.off ,
+                                    subtitle: cubit.livingRoomFloorLightIsOn ? cubit.on : cubit.off ,
                                     icon: Icon(
                                       Icons.lightbulb_outline,
-                                      color: cubit.floorLightIsOn ? Colors.yellow.shade600 : Colors.black,
+                                      color: cubit.livingRoomFloorLightIsOn ? Colors.yellow.shade600 : Colors.black,
                                       size: iconSize,
                                     ),
-                                    lightIsOn: cubit.floorLightIsOn,
+                                    lightIsOn: cubit.livingRoomFloorLightIsOn,
                                     size: size
                                 ),
                               ),

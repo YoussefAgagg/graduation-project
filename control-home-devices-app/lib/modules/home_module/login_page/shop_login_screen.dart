@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_home/layout/home_layout.dart';
 import 'package:smart_home/modules/home_module/rooms_screen/living_room.dart';
+import 'package:smart_home/modules/setting_module/setting_screen.dart';
 import 'package:smart_home/sever_connection/cubit/cubit.dart';
 import 'package:smart_home/sever_connection/cubit/states.dart';
 import 'package:smart_home/shared/components/componanets.dart';
@@ -21,7 +22,6 @@ class AppLoginScreen extends StatelessWidget {
   var  passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     return  BlocProvider(
@@ -29,12 +29,16 @@ class AppLoginScreen extends StatelessWidget {
       child: BlocConsumer<ServerCubit, ServerStates>(
           listener: (context,state){
              if (state is ShopLoginSuccessState){
-               navigateTo(context, HomeLayout());
+               ServerCubit. username =emailController.text;
+               ServerCubit. password =passwordController.text;
+               print(emailController.text);
+               print(passwordController.text);
                ServerCubit.get(context).connect();
+               navigateTo(context, HomeLayout());
             }
-            //  else{
-            //    showToast( msg: 'login failed');
-            //  }
+             else{
+               showToast( msg: 'login failed');
+             }
             //   } else {
             //     print(state.loginModel.message!);
             //     showToast(msg:state.loginModel.message! );
@@ -44,8 +48,20 @@ class AppLoginScreen extends StatelessWidget {
           builder: (context,state){
             ServerCubit cubit = ServerCubit.get(context);
             return
-            Scaffold(
-              appBar: AppBar(),
+            Scaffold(appBar: AppBar(
+             elevation: 0,
+             // backgroundColor: Colors.white54,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () {
+                    navigateTo(context, SettingScreen());
+                  },
+                ),
+              ],
+
+            ),
+
               body: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Center(
@@ -113,7 +129,7 @@ class AppLoginScreen extends StatelessWidget {
                                width: double.infinity,
                                onPressedFunction: (){
                                  if(formKey.currentState!.validate()){
-                                   cubit.login('android', 'password');
+                                   cubit.login(emailController.text, passwordController.text);
                                  }
 
 
@@ -132,17 +148,37 @@ class AppLoginScreen extends StatelessWidget {
                           // Row(
                           //   mainAxisAlignment: MainAxisAlignment.center,
                           //   children: [
-                          //     Text(
-                          //       'Don\'t have an account?',
-                          //     ),
-                          //     TextButton(
-                          //       onPressed: () {
-                          //         navigateTo(context, ShopRegisterScreen());
-                          //       },
-                          //       child: Text(
-                          //         'Register Now',
+                          //     SizedBox.fromSize(
+                          //       size: Size(70, 70), // button width and height
+                          //       child: ClipOval(
+                          //         child: Material(
+                          //           color: Colors.green, // button color
+                          //           child: InkWell(
+                          //             splashColor: Colors.green, // splash color
+                          //             onTap: () {
+                          //               navigateTo(context, SettingScreen());
+                          //             }, // button pressed
+                          //             child: Column(
+                          //               mainAxisAlignment: MainAxisAlignment.center,
+                          //               children: const <Widget>[
+                          //                 Icon(Icons.settings), // icon
+                          //                 Text("setting"), // text
+                          //               ],
+                          //             ),
+                          //           ),
+                          //         ),
                           //       ),
-                          //     ),],),
+                          //     ),
+                          //
+                          //     // TextButton(
+                          //     //   onPressed: () {
+                          //     //
+                          //     //   },
+                          //     //   child: Text(
+                          //     //     'inte Now',
+                          //     //   ),
+                          //     // ),
+                          //   ],),
 
                         ],
                       ),

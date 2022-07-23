@@ -8,17 +8,23 @@ class TopSelectButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButton<String>(
       items: const [
-        DropdownMenuItem<String>(
-          child: Text('All Rooms'),
-          value: 'All Rooms',
-        ),
+
         DropdownMenuItem<String>(
           child: Text('Living Room'),
           value: 'Living Room',
         ),
+        DropdownMenuItem<String>(
+          child: Text('Bedroom'),
+          value: 'BedRoom',
+        ),
+        DropdownMenuItem<String>(
+          child:
+          Text('Garage'),
+          value: 'Garage',
+        ),
       ],
       hint: const Text(
-        'Living Room',
+        'All Rooms ',
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black),
       ),
       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: Colors.black),
@@ -26,7 +32,9 @@ class TopSelectButton extends StatelessWidget {
       iconSize: 20,
       iconEnabledColor: Colors.black,
       underline: const SizedBox.shrink(),
-      onChanged: (value) {},
+      onChanged: (value) {
+
+      },
     );
   }
 }

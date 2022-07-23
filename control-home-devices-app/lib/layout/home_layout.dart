@@ -11,18 +11,18 @@ class HomeLayout extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return  BlocProvider(create: (BuildContext context) => HomeCubit() ,
-
     child:   BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = HomeCubit.get(context);
-
         return Scaffold(
           appBar: AppBar(
-            title: const Text(
-              'control home devices',
-              style: TextStyle(
-                color: Colors.black
+            title:  Center(
+              child: Text(
+                  cubit.title[cubit.currentIndex],
+                style: const TextStyle(
+                  color: Colors.black
+                ),
               ),
             ),
             elevation: 0.0,
